@@ -5,9 +5,22 @@ Online platform for classic car lovers that centralize clubs, events and helps o
 ## Get started
 
 1. Clone the project
+```
+git clone https://github.com/Koaden/meeoto.git
+```
 2. Create a `.env` file
+```
+make copy-env
+```
 3. install dependencies
+```
+make composer-install
+make npm-install
+```
 4. Start docker stack
+```
+make start
+```
 
 ## Useful links
 
