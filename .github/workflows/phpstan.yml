@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
     
       - name: Copy env
         run: make copy-env
@@ -20,6 +20,7 @@ jobs:
             chmod -R a+rwx apps/back/vendor
             mkdir -p apps/back/var
             chmod -R a+rwx apps/back/var
+            chmod -R a+rwx apps/back/public
 
       - name: Setup Composer
         run: make composer-install
