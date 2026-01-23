@@ -1,0 +1,28 @@
+name: PHPStan
+
+on:
+    pull_request:
+
+jobs:
+  phpstan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+    
+      - name: Copy env
+        run: make copy-env
+    
+      - name: Preparing directories
+        run: |
+            mkdir -p apps/back/vendor
+            chmod -R a+rwx apps/back/vendor
+            mkdir -p apps/back/var
+            chmod -R a+rwx apps/back/var
+
+      - name: Setup Composer
+        run: make composer-install
+
+      - name: Run PHPStan
+        run: make phpstan
