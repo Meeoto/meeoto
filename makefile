@@ -30,6 +30,12 @@ cc:  ## Clear cache
 cw:  ## Warmup cache
 	docker compose --env-file .env -f docker/compose.$(STAGE).yml run --rm --no-deps php php bin/console cache:warmup --env=$(APP_ENV)
 
+phpstan: ## Run phpstan.neon
+	docker compose --env-file .env -f docker/compose.$(STAGE).yml run --rm --no-deps php vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=512M
+
+php-cs-fixer: ## Run PHP CS Fixer fix command in src directory
+	docker compose --env-file .env -f docker/compose.$(STAGE).yml run --rm --no-deps php vendor/bin/php-cs-fixer fix src
+
 ##@ Containers
 php: ## Run bash console in php container
 	docker compose --env-file .env -f docker/compose.$(STAGE).yml run --rm php bash
