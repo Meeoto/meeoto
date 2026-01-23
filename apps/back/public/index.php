@@ -4,6 +4,10 @@ use App\Kernel;
 
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-return function (array $context) {
-    return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
+return function (array $context): Kernel {
+    /** @var string $env */
+    $env = $context['APP_ENV'] ?? 'dev';
+    $debug = (bool) ($context['APP_DEBUG'] ?? false);
+
+    return new Kernel($env, $debug);
 };

@@ -9,14 +9,14 @@ help: ## Display this current help
 
 ##@ General
 
-.PHONY=copy-env build start stop cc php react npm-install composer-install composer-update migrations fixtures
+.PHONY=copy-env build start stop cc phpstan php-cs-fixer phpunit php react npm-install composer-install composer-update migrations fixtures
 
 copy-env: ## Copy .env.dist to .env
 	cp --update=none .env.dist .env
 
 
 build: ## Build the docker images
-	docker compose --env-file .env -f docker/compose.$(STAGE).yml build --no-cache
+	docker compose --env-file .env -f docker/compose.$(STAGE).yml build
 
 start: ## Start project
 	docker compose --env-file .env -f docker/compose.$(STAGE).yml up --remove-orphans -d
@@ -29,6 +29,22 @@ cc:  ## Clear cache
 
 cw:  ## Warmup cache
 	docker compose --env-file .env -f docker/compose.$(STAGE).yml run --rm --no-deps php php bin/console cache:warmup --env=$(APP_ENV)
+
+##@ Tests and linters
+
+phpstan: ## Run phpstan.neon
+	docker compose --env-file .env -f docker/compose.$(STAGE).yml run --rm --no-deps php vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=512M
+
+php-cs-fixer: ## Run PHP CS Fixer fix command in src directory
+	docker compose --env-file .env -f docker/compose.$(STAGE).yml run --rm --no-deps php vendor/bin/php-cs-fixer fix src
+
+phpunit: ## Run PHPUnit tests in test environment
+	##@ Tests
+
+phpunit: ## Run PHPUnit tests in test environment
+	docker compose --env-file .env -f docker/compose.dev.yml \
+	  run --rm --no-deps -e APP_ENV=test php php bin/phpunit
+
 
 ##@ Containers
 php: ## Run bash console in php container
