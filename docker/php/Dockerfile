@@ -7,9 +7,10 @@ RUN apt-get update \
         zlib1g-dev \
         libzip-dev \
         libicu-dev \
+        libpq-dev \
         git \
         unzip \
-    && docker-php-ext-install -j"$(nproc)" pdo_mysql intl zip \
+    && docker-php-ext-install -j"$(nproc)" pdo_pgsql intl zip \
     && pecl install apcu-5.1.22 \
     && docker-php-ext-enable apcu \
     && rm -rf /var/lib/apt/lists/*

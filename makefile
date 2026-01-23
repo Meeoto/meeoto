@@ -16,7 +16,7 @@ copy-env: ## Copy .env.dist to .env
 
 
 build: ## Build the docker images
-	docker compose --env-file .env -f docker/compose.$(STAGE).yml build --no-cache
+	docker compose --env-file .env -f docker/compose.$(STAGE).yml build
 
 start: ## Start project
 	docker compose --env-file .env -f docker/compose.$(STAGE).yml up --remove-orphans -d
