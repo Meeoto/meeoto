@@ -6,7 +6,7 @@ Online platform for classic car lovers that centralize clubs, events and helps o
 
 1. Clone the project
 ```
-git clone https://github.com/Koaden/meeoto.git
+git clone https://github.com/Meeoto/meeoto.git
 ```
 2. Create a `.env` file
 ```
