@@ -58,7 +58,6 @@ services:
       target: dev
     volumes:
       - ../apps/front:/usr/src/app
-      - /usr/src/app/node_modules
     ports:
       - "80:5173"
     command: npm run dev -- --host
